@@ -54,32 +54,64 @@ npm run test
   "title": "",
   "fields": [
     { "name": "count", "type": "numeric", "label": "Count", "required": false },
-    { "name": "newField", "type": "string", "label": "New Field", "required": true },
-    { "name": "additionalField", "type": "string", "label": "Additional Field", "required": false }
+    {
+      "name": "newField",
+      "type": "string",
+      "label": "New Field",
+      "required": true
+    },
+    {
+      "name": "additionalField",
+      "type": "string",
+      "label": "Additional Field",
+      "required": false
+    }
   ],
   "buttons": ["Cancel", "OK"]
-};
+}
 ```
 
 You can also paste in the prepared form JSON config with all possible fields:
 
 ```json
-/*
-Example for testing all form fields
-
 {
   "title": "Test Form Title",
   "fields": [
-    { "name": "username", "type": "string", "label": "Username", "required": true },
+    {
+      "name": "username",
+      "type": "string",
+      "label": "Username",
+      "required": true
+    },
     { "name": "count", "type": "numeric", "label": "Count", "required": false },
-    { "name": "description", "type": "multi-line", "label": "Description", "required": false },
-    { "name": "isActive", "type": "boolean", "label": "Is Active", "required": true },
-    { "name": "birthDate", "type": "date", "label": "Birth Date", "required": true },
-    { "name": "role", "type": "enum", "label": "Role", "required": true, "options": ["admin", "user", "guest"] }
+    {
+      "name": "description",
+      "type": "multi-line",
+      "label": "Description",
+      "required": false
+    },
+    {
+      "name": "isActive",
+      "type": "boolean",
+      "label": "Is Active",
+      "required": true
+    },
+    {
+      "name": "birthDate",
+      "type": "date",
+      "label": "Birth Date",
+      "required": true
+    },
+    {
+      "name": "role",
+      "type": "enum",
+      "label": "Role",
+      "required": true,
+      "options": ["admin", "user", "guest"]
+    }
   ],
   "buttons": ["Cancel", "Save"]
-};
-*/
+}
 ```
 
 You can find these examples in the `defaultTemplate.ts` file as well.
