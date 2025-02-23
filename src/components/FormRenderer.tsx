@@ -63,9 +63,9 @@ const createValidationSchema = (
             : z.boolean().optional();
           break;
         case "date":
-          validationSchemaMap[field.name] = field.required
-            ? z.date()
-            : z.date().optional();
+          // validationSchemaMap[field.name] = field.required
+          //   ? z.date()
+          //   : z.date().optional();
           break;
         case "enum":
           if (!field.options || field.options.length === 0) {
