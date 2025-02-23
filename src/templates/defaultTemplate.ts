@@ -17,7 +17,7 @@ const defaultTemplate = {
 Example for testing all form fields
 
 const demoTemplateExample = {
-  title: "Test Page Title",
+  title: "Test Form Title",
   fields: [
     {
       name: "username",

@@ -1,50 +1,89 @@
-# React + TypeScript + Vite
+# Home Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a home task for generating a form from JSON configuration. The project is built using React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Project Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To set up the project locally, follow these steps:
 
-## Expanding the ESLint configuration
+1. Clone the repository:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+   ```sh
+   git clone https://github.com/[your-usermane]/home-test-task.git
+   cd home-test-task
+   ```
 
-- Configure the top-level `parserOptions` property like this:
+2. Install dependencies:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+   ```sh
+   npm install
+   ```
+
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Running Tests
+
+To run the tests, use the following command:
+
+```sh
+npm run test
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Libraries Used
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Vite**: A build tool that provides a faster and leaner development experience for modern web projects.
+- **Vitest**: A blazing fast unit test framework powered by Vite.
+- **@testing-library/react**: A library for testing React components by simulating user interactions.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### Why These Libraries?
+
+- **Vite**: Offers fast development server startup and hot module replacement (HMR).
+- **Vitest**: Integrates seamlessly with Vite and provides a fast testing experience.
+- **@testing-library/react**: Encourages writing tests that closely resemble how users interact with the application.
+
+## Basic Usage Scenario
+
+1. Open the application in your browser by navigating to `http://localhost:3000` after starting the development server.
+2. You will see a form with fields for "Username" and "Age".
+
+```json
+{
+  "title": "",
+  "fields": [
+    { "name": "count", "type": "numeric", "label": "Count", "required": false },
+    { "name": "newField", "type": "string", "label": "New Field", "required": true },
+    { "name": "additionalField", "type": "string", "label": "Additional Field", "required": false }
+  ],
+  "buttons": ["Cancel", "OK"]
+};
 ```
+
+You can also paste in the prepared form JSON config with all possible fields:
+
+```json
+/*
+Example for testing all form fields
+
+{
+  "title": "Test Form Title",
+  "fields": [
+    { "name": "username", "type": "string", "label": "Username", "required": true },
+    { "name": "count", "type": "numeric", "label": "Count", "required": false },
+    { "name": "description", "type": "multi-line", "label": "Description", "required": false },
+    { "name": "isActive", "type": "boolean", "label": "Is Active", "required": true },
+    { "name": "birthDate", "type": "date", "label": "Birth Date", "required": true },
+    { "name": "role", "type": "enum", "label": "Role", "required": true, "options": ["admin", "user", "guest"] }
+  ],
+  "buttons": ["Cancel", "Save"]
+};
+*/
+```
+
+You can find these examples in the `defaultTemplate.ts` file as well.
+
+3. Fill out the form and click the "Generate Form" button.
+4. You will be navigated to the Result tab with a generated form.
+5. On pressing one of the buttons, the form will submit with an informative alert containing the submitted data.
