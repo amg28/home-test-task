@@ -29,12 +29,14 @@ To set up the project locally, follow these steps:
 - **Vite**: A build tool that provides a faster and leaner development experience for modern web projects.
 - **react-hook-form**: A performant, flexible, and extensible form library for React.
 - **zod**: A TypeScript-first schema declaration and validation library.
+- **Material UI**: A popular React UI framework for building responsive and accessible user interfaces.
 
 ### Why These Libraries?
 
 - **Vite**: Offers fast development server startup and hot module replacement (HMR).
 - **react-hook-form**: Simplifies form handling and validation, making it easier to manage dynamic forms.
 - **zod**: Ensures JSON schema validation correctness before generating the form, providing a robust way to handle dynamic form and field validation.
+- **Material UI**: Provides a set of reusable and customizable components to build a consistent and modern user interface.
 
 ## Basic Usage Scenario
 
