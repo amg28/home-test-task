@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           </Button>
         </Toolbar>
       </AppBar>
-      <div style={{ padding: "20px" }}>{children}</div>
+      <Box sx={{ p: "20px" }}>{children}</Box>
     </div>
   );
 };

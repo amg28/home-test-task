@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import defaultTemplate from "../templates/defaultTemplate";
+import defaultTemplate from "../data/defaultTemplate";
 import ConfigEditor from "../components/ConfigEditor";
+import schema from "../data/schema";
 
 export const FORM_JSON_CONFIG_KEY = "formJsonConfig";
 const DEFAULT_JSON_TEMPLATE = JSON.stringify(defaultTemplate, null, 2);
@@ -27,17 +28,20 @@ const GenerateButton = styled(Button)({
 
 const Config = () => {
   const navigate = useNavigate();
-  const storedConfigJson: string | null =
-    localStorage.getItem(FORM_JSON_CONFIG_KEY);
-  const [jsonInput, setJsonInput] = useState<string>(
-    storedConfigJson ? storedConfigJson : DEFAULT_JSON_TEMPLATE
-  );
+
+  const [jsonInput, setJsonInput] = useState<string>(() => {
+    const storedConfigJson: string | null =
+      localStorage.getItem(FORM_JSON_CONFIG_KEY);
+    return storedConfigJson ? storedConfigJson : DEFAULT_JSON_TEMPLATE;
+  });
 
   const handleGenerate = () => {
     try {
+      schema.parse(JSON.parse(jsonInput));
       localStorage.setItem(FORM_JSON_CONFIG_KEY, jsonInput);
       navigate("/result");
-    } catch {
+    } catch (err) {
+      console.log(err);
       alert("Invalid JSON");
     }
   };

@@ -7,12 +7,17 @@ interface BooleanFieldProps {
   label: string;
 }
 
-const BooleanField: FC<BooleanFieldProps> = ({ field, label }) => (
-  <FormControlLabel
-    control={<Checkbox {...field} />}
-    label={label}
-    sx={{ mt: 2 }}
-  />
-);
+const BooleanField: FC<BooleanFieldProps> = ({ field, label }) => {
+  return (
+    <>
+      <FormControlLabel
+        control={<Checkbox {...field} />}
+        label={label}
+        sx={{ mt: 2 }}
+      />
+      ;
+    </>
+  );
+};
 
 export default BooleanField;

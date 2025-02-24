@@ -1,4 +1,6 @@
-const defaultTemplate = {
+import schema from "./schema";
+
+const defaultTemplate: Zod.infer<typeof schema> = {
   title: "",
   fields: [
     { name: "count", type: "numeric", label: "Count", required: false },

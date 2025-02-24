@@ -3,28 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button, Box, Typography, styled } from "@mui/material";
 import FieldRenderer from "./form/FieldRenderer";
-
-type FieldType =
-  | "string"
-  | "numeric"
-  | "multi-line"
-  | "boolean"
-  | "date"
-  | "enum";
-
-type FormField = {
-  name: string;
-  type: FieldType;
-  label: string;
-  required?: boolean;
-  options?: string[];
-};
-
-export type FormConfig = {
-  title: string;
-  fields: FormField[];
-  buttons: string[];
-};
+import { FormConfig, FormField } from "../data/schema";
+import { createValidationSchema } from "../data/validation";
 
 const StyledForm = styled("form")(({ theme }) => ({
   maxWidth: 500,
@@ -39,52 +19,6 @@ const StyledButtonGroup = styled(Box)(({ theme }) => ({
   justifyContent: "flex-end",
   marginTop: theme.spacing(1),
 }));
-
-const createValidationSchema = (
-  fields: FormField[]
-): Record<string, z.ZodTypeAny> => {
-  return fields.reduce<Record<string, z.ZodTypeAny>>(
-    (validationSchemaMap, field) => {
-      switch (field.type) {
-        case "numeric":
-          validationSchemaMap[field.name] = field.required
-            ? z.number().min(1)
-            : z.number().optional();
-          break;
-        case "string":
-        case "multi-line":
-          validationSchemaMap[field.name] = field.required
-            ? z.string().min(1)
-            : z.string().optional();
-          break;
-        case "boolean":
-          validationSchemaMap[field.name] = field.required
-            ? z.boolean()
-            : z.boolean().optional();
-          break;
-        case "date":
-          // validationSchemaMap[field.name] = field.required
-          //   ? z.date()
-          //   : z.date().optional();
-          break;
-        case "enum":
-          if (!field.options || field.options.length === 0) {
-            throw new Error(
-              `Field "${field.name}" has type "enum" but no options are provided`
-            );
-          }
-          validationSchemaMap[field.name] = field.required
-            ? z.enum(field.options as [string, ...string[]])
-            : z.enum(field.options as [string, ...string[]]).optional();
-          break;
-        default:
-          throw new Error(`Unknown field type: "${field.type}"`);
-      }
-      return validationSchemaMap;
-    },
-    {}
-  );
-};
 
 const createDefaultValues = (
   fields: FormField[]
@@ -106,22 +40,32 @@ const createDefaultValues = (
       case "date":
         defaultValues[field.name] = new Date();
         break;
-      case "enum":
-        defaultValues[field.name] = field.options?.[0] || "";
+      case "enum": {
+        const firstValue = field.options?.[0];
+        if (!firstValue) {
+          throw new Error(
+            "Invalid form config: radio button options are empty"
+          );
+        }
+        defaultValues[field.name] = firstValue;
         break;
+      }
     }
     return defaultValues;
   }, {});
 };
 
+type FormData = z.infer<ReturnType<typeof createValidationSchema>>;
 const FormRenderer = ({ config }: { config: FormConfig }) => {
-  const validationSchemaMap = createValidationSchema(config.fields);
-  const schema = z.object(validationSchemaMap);
+  const schema = createValidationSchema(config.fields);
 
-  type FormData = z.infer<typeof schema>;
   const defaultValues = createDefaultValues(config.fields);
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues,
   });
@@ -145,7 +89,8 @@ const FormRenderer = ({ config }: { config: FormConfig }) => {
               field={inputProps}
               type={field.type}
               label={field.label}
-              options={field.options}
+              errors={errors}
+              options={"options" in field ? field.options : undefined}
             />
           )}
         />
