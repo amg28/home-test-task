@@ -24,14 +24,6 @@ To set up the project locally, follow these steps:
    npm run dev
    ```
 
-## Running Tests
-
-To run the tests, use the following command:
-
-```sh
-npm run test
-```
-
 ## Libraries Used
 
 - **Vite**: A build tool that provides a faster and leaner development experience for modern web projects.
